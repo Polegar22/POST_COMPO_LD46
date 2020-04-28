@@ -103,9 +103,13 @@ Player.prototype.move = function (direction) {
     }, 2000);
   }
   if (
-    (contentOfTile !== TILE_TYPE.WALL || player.isBloodlust) &&
+    ((contentOfTile !== TILE_TYPE.WALL &&
+      contentOfTile !== TILE_TYPE.TAPESTRY_1 &&
+      contentOfTile !== TILE_TYPE.TAPESTRY_2) ||
+      player.isBloodlust) &&
     contentOfTile !== TILE_TYPE.OUT_OF_BOUND
   ) {
+    console.log(contentOfTile);
     this.position.x += deltaX;
     this.position.y += deltaY;
   }
@@ -153,7 +157,7 @@ Player.prototype.idle = function () {
 
 Player.prototype.removeLife = function (amount) {
   if (this.isBloodlust) {
-    amount = amount * 3;
+    amount = amount * 4;
   }
   if (this.life === 0) {
     aie.play();
@@ -173,7 +177,6 @@ Player.prototype.setBloodlust = function () {
   this.isBloodlust = !this.isBloodlust;
   if (this.isBloodlust) {
     on.play();
-    this.life = Math.floor(this.life / 2);
   } else {
     off.play();
   }
